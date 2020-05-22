@@ -21,10 +21,14 @@ export default {
             icon: 'icon-star',
         },
         {
+            name: 'Plugins',
+            url: '/pluginsDashboard',
+            icon: 'icon-plugins'
+        },
+        {
             name: 'Log Out',
             url: '/login',
             icon: 'icon-logout',
         },
-
     ],
 };

@@ -117,7 +117,15 @@ const urls = {
      */
     stopJob: "job/stop",
 
+    /**
+     *  List the loaded test plugins
+     */
     listTestPlugins: "pluginsctl/listTestPlugins",
+
+    /**
+     * Add a test plugin
+     */
+    addTestPlugin: "pluginsctl/addTestPlugin",
 
 };
 export default urls;
