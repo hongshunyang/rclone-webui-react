@@ -15,6 +15,7 @@ import singlePaneImg from '../../../assets/img/single-pane.png';
 import doublePaneImg from '../../../assets/img/double-pane1.png';
 import triplePaneImg from '../../../assets/img/triple-pane.png';
 import TabsLayout from "../TabsLayout/TabsLayout";
+import {loadTestPlugins} from "../../../actions/pluginActions";
 
 
 class RemoteExplorerLayout extends React.Component {
@@ -25,15 +26,21 @@ class RemoteExplorerLayout extends React.Component {
 		if (nos !== changeNumCols) {
 			changeNumCols(nos, mode);
 		}
+
+
 	};
 
 	componentDidMount() {
 		//Load one explorer layout
-		const {numContainers, addRemoteContainer} = this.props;
+		const {numContainers, addRemoteContainer, loadTestPlugins} = this.props;
 
 		if (numContainers < 1) {
 			addRemoteContainer(0)
 		}
+
+		// Load the test plugins
+		loadTestPlugins();
+
 	}
 
 	toggleDistractionFreeMode = (_) => {
@@ -69,25 +76,25 @@ class RemoteExplorerLayout extends React.Component {
 					}
 
 				</Col>
-            ))
-        }
-        return returnData;
-    };
+			))
+		}
+		return returnData;
+	};
 
-    render() {
+	render() {
 
-        /*Divide the 12 bootstrap columns to fit number of explorers*/
+		/*Divide the 12 bootstrap columns to fit number of explorers*/
 		const {numCols, distractionFreeMode, activeRemoteContainerID, containers} = this.props;
-        return (
-            <ErrorBoundary>
-                <Row className={"d-none d-md-block"} data-test="remoteExplorerLayout">
+		return (
+			<ErrorBoundary>
+				<Row className={"d-none d-md-block"} data-test="remoteExplorerLayout">
 
-                    {distractionFreeMode && <div className="clearfix float-right">
-                        <Button color={"success"} className={"ml-2"}
-                                onClick={this.toggleDistractionFreeMode}><i className="fa fa-arrows"/></Button>
-                    </div>}
+					{distractionFreeMode && <div className="clearfix float-right">
+						<Button color={"success"} className={"ml-2"}
+								onClick={this.toggleDistractionFreeMode}><i className="fa fa-arrows"/></Button>
+					</div>}
 
-                    {(!distractionFreeMode) &&
+					{(!distractionFreeMode) &&
 					<Col sm={12} lg={12} className="mb-3 d-none d-md-block">
                             
 
@@ -99,35 +106,35 @@ class RemoteExplorerLayout extends React.Component {
 								onClick={() => this.changeLayout(1, "horizontal")}>
 							<img style={{height: 24}} src={singlePaneImg} alt="Single Vertical Pane"/>
 						</Button>
-                        <Button color={"primary"} className={"ml-2 layout-change-button"}
-                                onClick={() => this.changeLayout(2, "horizontal")}>
-                            <img style={{height: 24}} src={doublePaneImg} alt="Double Vertical Pane"/>
-                        </Button>
-                        <Button color={"primary"} className={"ml-2 layout-change-button"}
-                                onClick={() => this.changeLayout(3, "horizontal")}>
-                            <img style={{height: 24}} src={triplePaneImg} alt="Triple Vertical Pane"/>
-                        </Button>
+						<Button color={"primary"} className={"ml-2 layout-change-button"}
+								onClick={() => this.changeLayout(2, "horizontal")}>
+							<img style={{height: 24}} src={doublePaneImg} alt="Double Vertical Pane"/>
+						</Button>
+						<Button color={"primary"} className={"ml-2 layout-change-button"}
+								onClick={() => this.changeLayout(3, "horizontal")}>
+							<img style={{height: 24}} src={triplePaneImg} alt="Triple Vertical Pane"/>
+						</Button>
 
-                        <Button color={"success"} className={"ml-2"}
-                                onClick={this.toggleDistractionFreeMode}><i className="fa fa-arrows"/> Full Screen
-                        </Button>
-                        {/*<Button onClick={this.changeLayout(4,"grid")}>4 - grid</Button>*/}
+						<Button color={"success"} className={"ml-2"}
+								onClick={this.toggleDistractionFreeMode}><i className="fa fa-arrows"/> Full Screen
+						</Button>
+						{/*<Button onClick={this.changeLayout(4,"grid")}>4 - grid</Button>*/}
 
-                    </Col>
-                    }
-                </Row>
+					</Col>
+					}
+				</Row>
 
-                <Row>
-                    <this.Panes
+				<Row>
+					<this.Panes
 						numCols={numCols}
 						distractionFreeMode={distractionFreeMode}
 						activeRemoteContainerID={activeRemoteContainerID}
 						containers={containers}
-                    />
-                </Row>
-            </ErrorBoundary>
-        );
-    }
+					/>
+				</Row>
+			</ErrorBoundary>
+		);
+	}
 }
 
 const mapStateToProps = (state) => ({
@@ -141,13 +148,20 @@ const mapStateToProps = (state) => ({
 });
 
 RemoteExplorerLayout.propTypes = {
-    backStacks: PropTypes.object.isRequired,
-    createPath: PropTypes.func.isRequired,
-    changeNumCols: PropTypes.func.isRequired,
-    distractionFreeMode: PropTypes.bool.isRequired
+	backStacks: PropTypes.object.isRequired,
+	createPath: PropTypes.func.isRequired,
+	changeNumCols: PropTypes.func.isRequired,
+	distractionFreeMode: PropTypes.bool.isRequired,
+	loadTestPlugins: PropTypes.func.isRequired,
 };
 
 export default compose(
-	connect(mapStateToProps, {createPath, changeNumCols, changeDistractionFreeMode, addRemoteContainer}),
+	connect(mapStateToProps, {
+		createPath,
+		changeNumCols,
+		changeDistractionFreeMode,
+		addRemoteContainer,
+		loadTestPlugins
+	}),
 	DragDropContext(HTML5Backend)
 )(RemoteExplorerLayout);

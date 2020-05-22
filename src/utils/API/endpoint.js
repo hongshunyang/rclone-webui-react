@@ -117,5 +117,7 @@ const urls = {
      */
     stopJob: "job/stop",
 
+    listTestPlugins: "pluginsctl/listTestPlugins",
+
 };
 export default urls;

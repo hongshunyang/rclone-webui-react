@@ -303,12 +303,25 @@ body{
 }
 
 .task-modal {
+  position: absolute;
+  //display: block;
+  width: 90%;
+  height: 90%;
+  //padding: 5%;
+  z-index: 1041;
+  top: 5%;
+  left: 5%;
+  bottom: 5%;
+  right: 5%;
+  //margin-top: -100px; /* Negative half of height. */
+  //margin-left: -250px; /* Negative half of width. */
+
+}
+
+.modal-button {
+  top: 18px;
+  right: 18px;
   position: fixed;
-  width: 600px;
-  top: 50%;
-  left: 50%;
-  margin-top: -100px; /* Negative half of height. */
-  margin-left: -250px; /* Negative half of width. */
 }
 
 .image-modal {
@@ -350,3 +363,12 @@ body{
   -ms-transform: rotate(270deg) translateX(-100%);
 }
 
+.pluginIframe {
+  width: 100%;
+  height: 100%;
+  display: block; /* iframes are inline by default */
+  background: #000;
+
+  border: none; /* Reset default border */
+
+}
