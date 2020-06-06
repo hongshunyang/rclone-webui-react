@@ -271,7 +271,7 @@ exports[`Remote Explorer renders should match snapshot 1`] = `
               />
               <Redirect
                 from="/"
-                to="/login"
+                to="/dashboard"
               />
             </Switch>
           </Suspense>
