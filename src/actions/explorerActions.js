@@ -12,7 +12,7 @@ import {
 } from "./types";
 import {makeUniqueID} from "../utils/Tools";
 import {createPath, removePath} from "./explorerStateActions";
-import {getAllRemoteNames, getFilesList} from "rclone-api"
+import {getAllRemoteNames, getFilesList, getRemoteInfo} from "rclone-api"
 
 /**
  * Gets the information regarding features, hashes from the rclone backend. Stores into redux store.
@@ -21,7 +21,7 @@ import {getAllRemoteNames, getFilesList} from "rclone-api"
  */
 export const getFsInfo = (remoteName) => dispatch => {
     // console.log("Actual: ", sentRemoteName);
-    getFsInfo(remoteName).then((res) => {
+    getRemoteInfo(remoteName).then((res) => {
             dispatch({
                 type: GET_CONFIG_FOR_REMOTE,
                 status: REQUEST_SUCCESS,
