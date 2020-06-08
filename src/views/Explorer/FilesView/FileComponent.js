@@ -20,6 +20,7 @@ import handleViewport from 'react-in-viewport';
 import MediaWidget, {isMedia} from "../../Base/MediaWidget/MediaWidget";
 import {PROP_ITEM} from "../../../utils/RclonePropTypes";
 import ErrorBoundary from "../../../ErrorHandling/ErrorBoundary";
+import PluginsHandler from "../../Base/PluginsHandler/PluginsHandler";
 
 async function performCopyMoveOperation(params) {
     const {srcRemoteName, srcRemotePath, destRemoteName, destRemotePath, Name, IsDir, dropEffect, updateHandler} = params;
@@ -118,7 +119,7 @@ function confirmDelete(deleteHandle, item) {
     }
 }
 
-function Actions({downloadHandle, deleteHandle, item, linkShareHandle}) {
+function Actions({downloadHandle, pluginHandle, deleteHandle, item, linkShareHandle, containerID}) {
 
     const {IsDir} = item;
     // let {ID, Name} = item;
@@ -135,9 +136,13 @@ function Actions({downloadHandle, deleteHandle, item, linkShareHandle}) {
                 <Button color="link" onClick={() => downloadHandle(item)}>
                     <i className={"fa fa-cloud-download fa-lg d-inline"}/>
                 </Button>
+
+
                 <Button color="link">
                     <i className="fa fa-info-circle"/>
                 </Button>
+
+                <PluginsHandler containerID={containerID} item={item}/>
 
                 <UncontrolledButtonDropdown>
                     <DropdownToggle color="link">
@@ -215,7 +220,11 @@ class FileComponent extends React.Component {
         }
     }
     render() {
-        const {containerID, inViewport, item, loadImages, clickHandler, downloadHandle, linkShareHandle, deleteHandle, connectDragSource, gridMode /*isDragging, remoteName*/} = this.props;
+        const {
+            containerID, inViewport, item, loadImages,
+            clickHandler, downloadHandle, linkShareHandle, deleteHandle, pluginHandle,
+            connectDragSource, gridMode /*isDragging, remoteName*/
+        } = this.props;
 
         const {IsDir, MimeType, ModTime, Name, Size} = item;
 
@@ -236,6 +245,7 @@ class FileComponent extends React.Component {
                         </CardBody>
                         <CardFooter>
                             <Actions downloadHandle={downloadHandle} linkShareHandle={linkShareHandle}
+                                     containerID={containerID}
                                      deleteHandle={deleteHandle} item={item}/>
                         </CardFooter>
                     </Card>
@@ -250,6 +260,7 @@ class FileComponent extends React.Component {
                     <td>{Size === -1 ? "-" : formatBytes(Size, 2)}</td>
                     <td className="d-none d-md-table-cell">{modTime.toLocaleDateString()}</td>
                     <td><Actions downloadHandle={downloadHandle} linkShareHandle={linkShareHandle}
+                                 pluginHandle={pluginHandle} containerID={containerID}
                                  deleteHandle={deleteHandle} item={item}/></td>
                 </tr>
             )
@@ -278,6 +289,11 @@ FileComponent.propTypes = {
      * Function to delete a file.
      */
     deleteHandle: PropTypes.func.isRequired,
+
+    /**
+     * Function to delete a file.
+     */
+    pluginHandle: PropTypes.func.isRequired,
     /**
      * Function to share the link of a file.
      */
