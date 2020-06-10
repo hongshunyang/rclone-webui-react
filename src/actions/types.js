@@ -41,6 +41,7 @@ export const CHANGE_SORT_FILTER = "CHANGE_SORT_FILTER";
 export const GET_TEST_PLUGINS = "GET_TEST_PLUGINS";
 
 export const ADD_TEST_PLUGIN = "ADD_TEST_PLUGIN";
+export const LOAD_PLUGINS = "LOAD_PLUGINS";
 
 export const REQUEST_ERROR = 'ERROR';
 export const REQUEST_SUCCESS = 'SUCCESS';
